@@ -52,11 +52,17 @@ public class BubbleSort
         /*returns the new comp list removes smallest from comp and puts it in sorted*/
         if (needsSwap(unsorted))
         {
-
+            
             /*There is a swap so the first was the biggest*/
             this.sorted.add(unsorted.get(1));
             newComp.add(unsorted.get(0));
-            this.numSwaps++;
+            
+            /*The program checks for number of swaps when it's finished these need to be 0
+            So if there were two equal numbers we don't count them as a swap since the positions don't change
+            */
+            if ((int)comp.get(0)!=(int) comp.get(1)){
+                this.numSwaps++;
+            }
 
         } else
         {
@@ -92,15 +98,16 @@ public class BubbleSort
                 }
 
                 /*preforms Swap and add a new element to comp*/
-                comp = Swap(comp);
-                comp.add(i.next());
+                    comp = Swap(comp);
+                    comp.add(i.next());
+                
                 i.remove();
             }
 
             /*add the last comparison and make sure to include it in the right order*/
             comp = Swap(comp);
             sorted.addAll(comp);
-
+            System.out.println("Itteration preformed with "+this.numSwaps+" Swaps");
             /* prepare for next Iteration*/
             this.unsorted.addAll(sorted);
             this.sorted.clear();
@@ -110,7 +117,7 @@ public class BubbleSort
 
         /*return and give feedback*/
         System.out.println("Program finished with " + itteration + " iterations");
-        printTable(this.unsorted, 15);
+        printTable(this.unsorted, 14);
         return this.sorted;
     }
 

@@ -9,13 +9,13 @@ import java.util.List;
 import domein.BubbleSort;
 /**
  *
- * @author iamja
+ * @author Michiel S
  */
 public class Test
 {
     public static void main(String[] args)
     {
-       GenerateList list = new GenerateList(942);
+       GenerateList list = new GenerateList(2904,true,true);
        List randlist = list.generateList();
        
        BubbleSort bubble = new BubbleSort(randlist);
