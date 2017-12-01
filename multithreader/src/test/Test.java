@@ -6,7 +6,8 @@
 package test;
 import domein.GenerateList;
 import java.util.List;
-import domein.BubbleSort;
+import sorts.BubbleSort;
+import domein.SortController;
 /**
  *
  * @author Michiel S
@@ -18,9 +19,10 @@ public class Test
        GenerateList list = new GenerateList(2904,true,true);
        List randlist = list.generateList();
        
-       BubbleSort bubble = new BubbleSort(randlist);
-       bubble.sort();
+       SortController s = new SortController("Ascending",randlist);
        
+       BubbleSort bubble = new BubbleSort(s);
+       bubble.sort();
     }
     
 }

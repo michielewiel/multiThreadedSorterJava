@@ -1,61 +1,81 @@
+package sorts;
+
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domein;
+
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.ListIterator;
-
+import domein.SortController;
+import enums.Modes.Mode;
+import domein.SortFunctions;
 /**
  *
  * @author: Michiel Schoofs
  */
 public class BubbleSort
 {
+    
+    private List<Integer> sorted = new ArrayList(), comp, unsorted;
+    private int numSwaps, length, itteration = 0;
+    SortController s;
+    SortFunctions func = new SortFunctions();
 
-    List<Integer> sorted = new ArrayList(), comp, unsorted;
-    int numSwaps, length, itteration = 0, index;
-
-    public BubbleSort(List<Integer> list)
+    public BubbleSort(SortController s)
     {
-        setUnsorted(list);
-        setLength(list);
+        setUnsorted(s.getList());
+        setLength(s.getUnsortedLength());
+        this.s = s;
     }
+
 
     private void setUnsorted(List<Integer> unsorted)
     {
         this.unsorted = unsorted;
     }
 
-    private void setLength(List<Integer> unsorted)
+    private void setLength(int length)
     {
-        this.length = unsorted.size();
+        this.length = length;
     }
 
+
+    
     public int getLength()
     {
         return this.length;
     }
 
-    private boolean needsSwap(List<Integer> list)
+    private boolean needSwapAscending(List<Integer> list)
     {
         return (list.get(0) >= list.get(1));
     }
 
+    
+    private boolean needSwapDescending(List<Integer> list){
+        return(list.get(0)<= list.get(1));
+    }
+    
     private List<Integer> Swap(List<Integer> unsorted)
     {
-
+        boolean ascendingswap = (needSwapAscending(unsorted) && s.GetMode() == Mode.Ascending),
+                descendingswap= (needSwapDescending(unsorted ) && s.GetMode() == Mode.Descending);
+        
         List<Integer> newComp = new ArrayList();
+        
+        
         /*returns the new comp list removes smallest from comp and puts it in sorted*/
-        if (needsSwap(unsorted))
+        if (ascendingswap ||descendingswap)
         {
             
             /*There is a swap so the first was the biggest*/
             this.sorted.add(unsorted.get(1));
             newComp.add(unsorted.get(0));
+            
             
             /*The program checks for number of swaps when it's finished these need to be 0
             So if there were two equal numbers we don't count them as a swap since the positions don't change
@@ -66,7 +86,6 @@ public class BubbleSort
 
         } else
         {
-
             /*There is no swap so the second argument is the smallest*/
             this.sorted.add(unsorted.get(0));
             newComp.add(unsorted.get(1));
@@ -117,7 +136,7 @@ public class BubbleSort
 
         /*return and give feedback*/
         System.out.println("Program finished with " + itteration + " iterations");
-        printTable(this.unsorted, 14);
+        func.printTable(this.unsorted, 8);
         return this.sorted;
     }
 
@@ -126,34 +145,5 @@ public class BubbleSort
         return ((sorted.size()) == length - 2);
     }
 
-    public void printTable(List<Integer> list, int width)
-    {
-        int remain = list.size() % width;
-        String table = "";
 
-        /*make table*/
-        for (int i = 0; i <= (list.size() - (remain * 2)); i += width)
-        {
-
-            /* make table row*/
-            for (int x = i; x <= (i + width >= list.size() ? list.size() - 1 : i + width); x++)
-            {
-                table += list.get(x) + "\t";
-            }
-            /*make a new row*/
-            table += "\n";
-        }
-
-        /*add remainder*/
-        if (remain != 0)
-        {
-            for (int i = (list.size() - remain); i <= list.size() - 1; i++)
-            {
-                table += list.get(i) + "\t";
-            }
-        }
-
-        /*print the table*/
-        System.out.println(table);
-    }
 }
